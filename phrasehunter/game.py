@@ -1,89 +1,57 @@
 # Create your Game class logic in here.
 import random
-import re
+from phrase import Phrase
 
 class Game():
-    '''
- |  Class representing a company employee.
- |  
- |  Attributes
- |   ----------
- |   name : str 
- |       Employee's name        
- |   email : str, default None
- |       Employee's email
- |   salary : float, default None
- |       Employee's salary
- |   rank : int, default 5
- |       The rank of the employee in the company hierarchy (1 -- CEO, 2 -- direct reports of CEO, 3 -- direct reports of direct reports of CEO etc). Cannot be None if the employee is current.
- |  
- |  Methods defined here:
- |  
- |  __init__(self, name, email=None, salary=None, rank=5)
- |      Create an Employee object
- |  
- |  give_raise(self, amount)
- |      Raise employee's salary by a certain `amount`. Can only be used with current employees.
- |      
- |      Example usage:
- |        # emp is an Employee object
- |        emp.give_raise(1000)
- |  
- |  promote(self)
- |      Promote an employee to the next level of the company hierarchy. Decreases the rank of the employee by 1. Can only be used on current employeed who are not at the top of the hierarchy.
- |      
- |      Example usage:
- |          # emp is an Employee object
- |          emp.promote()
- |  
- |  terminate(self)
- |      Terminate the employee. Sets salary and rank to None..
- |      
- |      Example usage:
- |         # emp is an Employee object
- |         emp.terminate()
- |  
- |  ----------------------------------------------------------------------
- |  Data descriptors defined here:
- |  
- |  __dict__
- |      dictionary for instance variables (if defined)
- |  
- |  __weakref__
- |      list of weak references to the object (if defined)
-    '''
 
-    # methods for starting the game, handling interactions, getting a random phrase, 
-    # checking for a win/loss state, and removing "lives" or turns from the player.
     def __init__(self, phrases):
         self.phrase = Phrase(phrases[randint(len(phrases))])
         self.won = False
-        self.num_guesses = 0
+        self.lives = 5
+        self.letters_guessed = ''
+
+    def update_letters_guessed(self, guess):
+        self.letters_guessed.append(guess)
 
     def get_guess(self):
         valid_guess = False
         while not valid_guess:
             try:
-                user_guess = input('Enter a letter (a-z): ')
-                if len(user_guess) > 1:
+                guessed_char = input('Enter a letter (a-z): ')
+                if len(guessed_char) > 1:
                     raise ValueError('Too many characters entered - please enter only one letter')
-                if re.search(user_guess, [^a-z]):
+                if re.search(guessed_char, [^a-z]):
                     raise ValueError('Invalid character entered - please enter a letter (a-z) ')
+                if guessed_char in self.letters_guessed:
+                    raise ValueError("You've already guessed this letter, try again ")
             except ValueError:
                 continue
             valid_guess = True
-        return user_guess
+        return guessed_char.lower()
 
+    def update_lives(self, good_guess):
+        if not good_guess:
+            self.lives -= 1
 
-    def start(self):
+    def play_game(self):
         print('Welcome to Phrase Hunter !')
         print('guess a letter in the phrase')
         print('5 guesses to get the phrase')
         print('Your phrase is: ',end='')
         self.phrase.display_phrase()
-        while not self.won and self.num_guesses < 6:
-            guess = get_guess()
-            good_guess = phrase.check_guess(guess)
+        while not self.won and self.lives > 0:
+            guessed_char = get_guess()
+            update_letters_guessed(guessed_char)
+            good_guess = self.phrase.check_guess(guessed_char)
+            if good_guess:
+                self.won = self.phrase.check_if_won()
+            else:
+                update_lives()
+        if self.won:
+            print("Magnificent job, you got it !! ")
+        else:
+            print("Sorry you didn't get it this time.")
+            print("Complete phrase was: " + self.phrase)
 
 
 

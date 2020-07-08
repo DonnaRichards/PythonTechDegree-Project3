@@ -57,9 +57,29 @@ class Phrase():
         self.phrase = [Character(char) for char in phrase]
         self.guessed = False
 
+    def __str__(self):
+        for char in phrase:
+            print(char.show_char(), end='')
+
     def display_phrase(self):
         for char in self.phrase:
             print(char, end=' ')
         print('\n')
+
+    def check_guess(self, guess):
+        good_guess = False
+        for char in self.phrase:
+            if not char.guessed:
+                char.set_guess(guess)
+                if char.guessed:
+                    good_guess = True
+        return good_guess
+
+    def check_if_won(self):
+        for char in self.phrase:
+            if not char.guessed:
+                return False
+        return True
+
 
 

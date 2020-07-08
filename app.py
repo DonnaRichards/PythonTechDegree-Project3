@@ -29,7 +29,7 @@ if __name__ == "__main__":
    play_again = 'y'
    while play_again.lower() = 'y':
       game = Game(PHRASELIST)
-      game.start()
+      game.play_game()
       play_again = input('Do you want to play again ? (y/n) ')
       del game
    print('Thank you for playing the game !  Enjoy the rest of your day')
