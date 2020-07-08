@@ -3,24 +3,23 @@ import re
 # Create your Character class logic in here.
 class Character():
 
-
     # help a Phrase determine how an individual character should display itself.
 
     def __init__(self, char):
         self.char = char
-        if re.search(char, [a-z]):
+        if re.search(r'[A-Za-z]', char):
             self.guessed = False
-        else
+        else:
             self.guessed = True
 
     def set_guess(self, char):
         if char.lower() == self.char.lower():
             self.guessed = True
 
-    def __str__(self):
+    def display_char(self):
         if self.guessed:
             return self.char
-        else
+        else:
             return '_'
 
     def show_char(self):

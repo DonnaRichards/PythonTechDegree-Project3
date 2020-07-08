@@ -1,5 +1,5 @@
-from ./phrasehunter/game import Game
-from ./phrasehunter/phraselist import PHRASELIST
+from phrasehunter.phraselist import PHRASELIST
+from phrasehunter.game import Game
 
 """
 Flow of the game
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 ## Create an instance of your Game class
 ## Start your game by calling the instance method that starts the game loop
    play_again = 'y'
-   while play_again.lower() = 'y':
+   while play_again.lower() == 'y':
       game = Game(PHRASELIST)
       game.play_game()
       play_again = input('Do you want to play again ? (y/n) ')
