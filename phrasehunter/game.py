@@ -66,7 +66,7 @@ class Game:
             print('Current phrase is: ', end='')
             self.phrase.display_phrase()
             guessed_char = self.get_guess()
-            self.letters_guessed.append(guessed_char)
+            self.letters_guessed.append(guessed_char.lower())
             good_guess = self.phrase.check_guess(guessed_char)
             if good_guess:
                 print('Good guess')
